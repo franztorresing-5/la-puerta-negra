@@ -1,7 +1,5 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { MapPin, Clock, BellRing, Utensils, ChefHat, Info, Menu, X, Coffee, CakeSlice,Star, MessageSquareQuote, CreditCard, Landmark } from 'lucide-react';
+import Navbar from './navbar';
+import { MapPin, Clock, BellRing, Utensils, ChefHat, Coffee, CakeSlice, Star, MessageSquareQuote, CreditCard, Landmark } from 'lucide-react';
 import Image from 'next/image';
 // ==========================================
 // 1. CONFIGURACIÓN DEL RESTAURANTE
@@ -67,59 +65,10 @@ const siteConfig = {
 // 2. COMPONENTES DE LA PÁGINA
 // ==========================================
 
-const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-white/80 backdrop-blur-sm py-5'}`}>
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        <a href="#inicio" className="text-2xl font-serif font-bold tracking-widest text-[#E4007C]">
-         LA PUERTA NEGRA
-        </a>
-        <nav className="hidden md:flex items-center gap-8 text-sm font-bold tracking-wider uppercase text-slate-700">
-          <a href="#avisos" className="hover:text-amber-600 transition-colors">Avisos</a>
-          <a href="#menu" className="hover:text-amber-600 transition-colors">Menú y Carta</a>
-          <a href="#ubicacion" className="hover:text-amber-600 transition-colors">Ubicación</a>
-          <a
-            href={siteConfig.mapsLink} target="_blank" rel="noopener noreferrer"
-            className="bg-amber-500 text-white px-6 py-2 rounded-full hover:bg-amber-600 transition-all shadow-md"
-          >
-            Cómo Llegar
-          </a>
-        </nav>
-
-        <button className="md:hidden text-emerald-900" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 flex flex-col py-4 px-6 shadow-xl">
-          <a href="#avisos" onClick={() => setIsOpen(false)} className="py-3 text-slate-700 font-bold border-b border-gray-100 uppercase tracking-wider text-sm">Avisos y Promos</a>
-          <a href="#menu" onClick={() => setIsOpen(false)} className="py-3 text-slate-700 font-bold border-b border-gray-100 uppercase tracking-wider text-sm">Menú y Carta</a>
-          <a href="#ubicacion" onClick={() => setIsOpen(false)} className="py-3 text-slate-700 font-bold uppercase tracking-wider text-sm">Ubicación</a>
-        </div>
-      )}
-    </header>
-  );
-};
-
 const Hero = () => (
   <section id="inicio" className="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden bg-stone-50">
-    <div className="absolute inset-0 z-0 opacity-10">
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-400 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-600 blur-[120px] rounded-full pointer-events-none" />
-    </div>
-
     <div className="container mx-auto px-6 relative z-20 text-center">
-      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+      <div>
         
         <div className="w-full flex justify-center ">
   <Image
@@ -144,7 +93,7 @@ const Hero = () => (
             {siteConfig.schedule}
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   </section>
 );
@@ -160,19 +109,15 @@ const NoticesSection = () => {
   return (
     <section id="avisos" className="py-20 bg-white relative z-10 -mt-10 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-serif text-emerald-950 mb-4">Para Empezar el Día</h2>
           <div className="w-16 h-1.5 bg-[#E3C700] mx-auto rounded-full" />
-        </motion.div>
+        </div>
 
         <div className={`grid grid-cols-1 ${gridClass} gap-6 max-w-6xl mx-auto`}>
           {siteConfig.notices.map((notice, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
               className={`bg-stone-50 p-8 rounded-2xl border border-stone-200 shadow-md hover:shadow-xl hover:border-amber-300 transition-all group relative overflow-hidden ${noticesCount === 1 ? 'flex flex-col items-center text-center max-w-3xl mx-auto' : ''
                 }`}
             >
@@ -183,7 +128,7 @@ const NoticesSection = () => {
               <p className={`text-slate-600 font-medium text-sm leading-relaxed ${noticesCount === 1 ? 'max-w-xl' : ''}`}>
                 {notice.desc}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -537,7 +482,7 @@ const LocationSection = () => (
         </div>
 
         {/* Mapa / Imagen */}
-        <div className="h-80 md:h-[450px] w-full bg-stone-200 relative rounded-3xl overflow-hidden shadow-2xl group border-4 border-white">
+        <div className="h-80 md:h-112.5 w-full bg-stone-200 relative rounded-3xl overflow-hidden shadow-2xl group border-4 border-white">
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-10 bg-emerald-900/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <MapPin size={48} className="text-white mb-4" />
             <h3 className="text-white font-serif text-3xl mb-2">La Puerta Negra</h3>
@@ -549,7 +494,7 @@ const LocationSection = () => (
             </a>
           </div>
           {/* Fondo por defecto */}
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80')] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" />
+          <div className="absolute inset-0 bg-linear-to-br from-emerald-950 via-[#325F63] to-stone-300" />
         </div>
       </div>
     </div>
