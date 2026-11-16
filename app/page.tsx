@@ -125,8 +125,8 @@ const Hero = () => (
   <Image
     src="/puerta-negra-sinfondo.webp" /* Asegúrate de usar el mismo nombre de archivo que pusiste en el Navbar */
     alt="Logotipo La Puerta Negra"
-    width={600}
-    height={300}
+    width={200}
+    height={200}
     className="w-72 md:w-96 lg:w-50rem h-auto object-contain drop-shadow-xl"
     priority
   />
